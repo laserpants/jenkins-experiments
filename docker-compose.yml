@@ -1,0 +1,18 @@
+services:
+  jenkins:
+    image: laserpants/jenkins
+    build:
+      context: .docker/jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - "./jenkins_home:/var/jenkins_home"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    secrets:
+      - source: ssh_key
+        target: /var/www/.ssh
+
+secrets:
+  ssh_key:
+    file: ~/.ssh
